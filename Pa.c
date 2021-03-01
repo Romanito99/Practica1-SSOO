@@ -29,16 +29,13 @@ void Creardirectorios(char *cadena){
 
 	}
 int main(){
-	
-	
 	char cadena[256];
-    printf("El proceso A procede a crear los directorios con cada DNI\n"); 
 	/* Abrimos "fichero1.txt" en modo texto y
 	 * guardamos su direccion en el puntero. */
 	fichero = fopen("estudiantes_p1.text", "rt");
 
 	if (fichero == NULL) {
-		printf("Error: No se ha podido crear el fichero fichero1.txt");
+		printf("[PA] Error: No se ha podido crear el fichero fichero1.txt");
 		exit(EXIT_FAILURE);
     
 	} else {

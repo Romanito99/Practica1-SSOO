@@ -29,7 +29,7 @@ int main(){
 	fichero = fopen("estudiantes_p1.text", "rt");
 
 	if (fichero == NULL) {
-		printf("Error: No se ha podido crear el fichero fichero1.txt");
+		printf("[PB] Error: No se ha podido crear el fichero fichero1.txt");
 		exit(EXIT_FAILURE);
     
 	} else {

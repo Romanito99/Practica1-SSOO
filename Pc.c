@@ -11,6 +11,7 @@
 	/* Declaramos la variable reslutado como puntero. */
 int Copiar(char *cadena,float media){
 	char command[256];
+	
 	char linea[8];
 	const char s[2] = " ";
    	char *Dni;
@@ -34,13 +35,14 @@ int Copiar(char *cadena,float media){
 int main(int argc, char *argv[]){
     char readBuffer[80];
 	char cadena[256];
+	char msg[256];
 	float media=0; 
 	/* Abrimos "fichero1.txt" en modo texto y
 	 * guardamos su direccion en el puntero. */
 	fichero = fopen("estudiantes_p1.text", "rt");
 
 	if (fichero == NULL) {
-		printf("Error: No se ha podido crear el fichero fichero1.txt");
+		printf("[PC] Error: No se ha podido crear el fichero fichero1.txt");
 		exit(EXIT_FAILURE);
     
 	} else {

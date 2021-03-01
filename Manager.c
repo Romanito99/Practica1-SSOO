@@ -29,11 +29,11 @@ int main(int argc, char *argv[]){
     signal(SIGINT, manejador);
     switch(pid_a = fork()){
         case -1:
-            fprintf(stderr,"Error al crear el proceso hijo: %s\n",strerror(errno));
+            fprintf(stderr,"[MANAGER] Error al crear el proceso hijo: %s\n",strerror(errno));
             
         case 0:
             if(execve("./Pa", parmList,envParms)==-1){
-                fprintf(stderr,"error en execl: %s\n",strerror(errno));
+                fprintf(stderr,"[MANAGER] Error en execl: %s\n",strerror(errno));
                 
             }
         default:
@@ -46,20 +46,20 @@ int main(int argc, char *argv[]){
             //Codigo del proceso PB
             
             if(execve("./Pb", parmList,envParms)==-1){
-                fprintf(stderr,"error en execl: %s\n",strerror(errno));
+                fprintf(stderr,"[MANAGER] Error en execl: %s\n",strerror(errno));
                 
             }
         }else if (pid_b==-1){
-            perror("Error con el proceso PB");
+            perror("[MANAGER] Error con el proceso PB");
             exit(1);
 
         }else if((pid_c = fork())== 0){
             //Codigo del proceso PC
             if(execl("./Pc", wr_tuberiaC)==-1){
-                fprintf(stderr,"error en execl: %s\n",strerror(errno));
+                fprintf(stderr,"[MANAGER] Error en execl: %s\n",strerror(errno));
                             }
         }else if(pid_c==-1) {
-            perror("Error con el proceso PC");
+            perror("[MANAGER] Error con el proceso PC");
             exit(1);
         }
         else{
@@ -72,9 +72,6 @@ int main(int argc, char *argv[]){
             sprintf(command,"echo La nota media de la clase es: %s >> log.txt",readBuffer);
 			system(command);
             system("echo ******FIN DEL PROGRAMA****** >> log.txt");
-            
-            
-            
             exit(0);
         }
     }
@@ -112,7 +109,8 @@ void manejador(int signum){
 
     waitpid(pid_d, &d_status, 0); 
     printf("[MANAGER] Proceso PD %d finalizado\n", pid_d);  
-    
+    system("echo La ejecucion del programa a sido detenida voluntariamente. >> log.txt" );
+    system("echo ******FIN DEL PROGRAMA****** >> log.txt");
     printf("[MANAGER] Finalizado\n"); 
 
     exit(EXIT_FAILURE);
