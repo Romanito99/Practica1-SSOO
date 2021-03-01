@@ -1,0 +1,2 @@
+******Log del sistema******
+Creacion de directorios finalizada
