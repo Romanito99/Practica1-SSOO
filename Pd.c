@@ -13,7 +13,9 @@
 int main(){
         char command[256];
         sprintf(command,"rm -rf estudiantes");
-		system(command);
+		if (system(command)!=0){
+			printf("error al borrar el archvo\n");
+		}
 	exit(0);
     
 }

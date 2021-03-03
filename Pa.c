@@ -4,6 +4,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <sys/stat.h>
+#include <signal.h>
 
  /* Declaramos la variable fichero como puntero a FILE. */
 	FILE *fichero;
@@ -13,25 +14,17 @@
 
 	/* Declaramos la variable reslutado como puntero. */
 	char *resultado;
-    
-void Creardirectorios(char *cadena){
-	char linea[8];
-	
-   	char command[256];
-	const char s[2] = " ";
-   	char *Dni;
-	
-			
-			Dni = strtok(cadena, s);
-			sprintf(command,"mkdir estudiantes/%s",Dni);
-			system(command);
+	/* Declaramos los metodos */
+	void manejador(int signum);
+	void Creardirectorios(char *cadena);
 
-
-	}
 int main(){
+	signal(SIGINT, manejador);
 	char cadena[256];
+	
 	/* Abrimos "fichero1.txt" en modo texto y
 	 * guardamos su direccion en el puntero. */
+	
 	fichero = fopen("estudiantes_p1.text", "rt");
 
 	if (fichero == NULL) {
@@ -46,12 +39,30 @@ int main(){
         }
 		/* Cerramos "fichero1.txt". */
 		fclose(fichero);
-		exit(0);
+		exit(EXIT_SUCCESS);
     }
 
+}
+
+void Creardirectorios(char *cadena){
+	char linea[8];
+   	char command[256];
+	const char s[2] = " ";
+   	char *Dni;
 	
+			
+			Dni = strtok(cadena, s);
+			sprintf(command,"mkdir estudiantes/%s",Dni);
+			
+			if(system(command)!=0){
+				printf("[PA] Esta carpeta ya existe , no podemos crearla\n");
+			}
 
-	
+
+}
 
 
+void manejador(int signum){
+	printf("[PA] Proceso finalizaddo\n");
+	exit(0);
 }

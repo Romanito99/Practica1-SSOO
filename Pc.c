@@ -4,35 +4,18 @@
 #include <string.h>
 #include <ctype.h>
 #include <sys/stat.h>
+#include <signal.h>
 
  /* Declaramos la variable fichero como puntero a FILE. */
 	FILE *fichero;
 	/* Declaramos la variable cadena de tipo array char. */
-	/* Declaramos la variable reslutado como puntero. */
-int Copiar(char *cadena,float media){
-	char command[256];
-	
-	char linea[8];
-	const char s[2] = " ";
-   	char *Dni;
-	char *Examen;	
-	char *Nota;
-	int nota;
-		Dni = strtok(cadena, s);
-		if( Dni != NULL ) {
-		Examen= strtok(NULL, s);
-		}
-		if( Examen != NULL ) {
-		nota= atoi(strtok(NULL, s));
-		}
+	void manejador(int signum);
+	int Copiar(char *cadena,float media)
 
-		media+=nota;	
-		nota=10-nota;
-		sprintf(command,"echo La nota que debes obtener en este nuevo examen para superar la prueba es %d >   estudiantes/%s/nota.txt",nota ,Dni);
-		system(command);
-		return media;
-	}
-int main(int argc, char *argv[]){
+	/* Declaramos la variable reslutado como puntero. */
+
+ void main(int argc, char *argv[]){
+	signal(SIGINT, manejador);
     char readBuffer[80];
 	char cadena[256];
 	char msg[256];
@@ -54,6 +37,37 @@ int main(int argc, char *argv[]){
 		fclose(fichero);
 		sprintf(msg,"La nota del examen es %f",media);
 		write(atoi(argv[0]), msg,strlen(msg)+1);
-		exit(0);
+		exit(EXIT_SUCCESS);
     }
+}
+
+void manejador(int signum){
+	printf("[PC] Proceso finalizaddo\n");
+	exit(0);
+}
+
+int Copiar(char *cadena,float media){
+	char command[256];
+	
+	char linea[8];
+	const char s[2] = " ";
+   	char *Dni;
+	char *Examen;	
+	char *Nota;
+	int nota;
+		Dni = strtok(cadena, s);
+		if( Dni != NULL ) {
+		Examen= strtok(NULL, s);
+		}
+		if( Examen != NULL ) {
+		nota= atoi(strtok(NULL, s));
+		}
+		media+=nota;	
+		nota=10-nota;
+		sprintf(command,"echo La nota que debes obtener en este nuevo examen para superar la prueba es %d >   estudiantes/%s/nota.txt",nota ,Dni);
+
+		if (system(command)!=0){
+			printf("[PC] Error escribiendo el archivo\n");
+		}
+	return media;
 }

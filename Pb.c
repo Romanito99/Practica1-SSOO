@@ -4,28 +4,19 @@
 #include <string.h>
 #include <ctype.h>
 #include <sys/stat.h>
+#include <signal.h>
 
  /* Declaramos la variable fichero como puntero a FILE. */
 	FILE *fichero;
-	/* Declaramos la variable cadena de tipo array char. */
+	/* Declaramos los metodos . */
+	void Copiar(char *cadena);
+	void manejador(int signum);
 	/* Declaramos la variable reslutado como puntero. */
-void Copiar(char *cadena){
-	char command[256];
-	char linea[8];
-	const char s[2] = " ";
-   	char *Dni;
-	char *Examen;	
-			Dni = strtok(cadena, s);
-			if( Dni != NULL ) {
-      		Examen= strtok(NULL, s);
-   			}
-	sprintf(command,"cp MODELOSEXAMEN/MODELO%s.pdf estudiantes/%s",Examen,Dni);
-	system(command);
-	}
+	
 int main(){
+	signal(SIGINT, manejador);
 	char cadena[256]; 
-	/* Abrimos "fichero1.txt" en modo texto y
-	 * guardamos su direccion en el puntero. */
+	/* Abrimos "fichero1.txt" en modo texto y guardamos su direccion en el puntero. */
 	fichero = fopen("estudiantes_p1.text", "rt");
 
 	if (fichero == NULL) {
@@ -38,8 +29,27 @@ int main(){
         }
 		/* Cerramos "fichero1.txt". */
 		fclose(fichero);
-		exit(0);
+		exit(EXIT_SUCCESS);
     }
+}
 
+void manejador(int signum){
+	printf("[Pb] Proceso finalizaddo\n");
+	exit(0);
+}
 
+void Copiar(char *cadena){
+	char command[256];
+	char linea[8];
+	const char s[2] = " ";
+   	char *Dni;
+	char *Examen;	
+	Dni = strtok(cadena, s);
+		if( Dni != NULL ) {
+      		Examen= strtok(NULL, s);
+   		}
+	sprintf(command,"cp MODELOSEXAMEN/MODELO%s.pdf estudiantes/%s",Examen,Dni);
+	if(system(command)!=0){
+		printf("[PB]Error al copiar el archivo\n");
+	}
 }
