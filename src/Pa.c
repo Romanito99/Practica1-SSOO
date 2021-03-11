@@ -1,3 +1,18 @@
+/******************************************************
+ * Proyecto:                Práctica 1 de Sistemas Operativos II
+ * 
+ * Nombre de la Clase:      Pa.c
+ * 
+ * Autor:                   César Braojos Corroto
+ * 
+ * Dni:                     03949910M
+ * 
+ * Fecha final:             19/2/2019
+ * 
+ * Proposito:               Creación de los procesos PA, PB y PC, registra la finalización de cada tarea, la nota media de los estudiantes en la primera prueba y 
+ *                          crea el archivo log.txt
+ * 
+ ******************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -6,18 +21,14 @@
 #include <sys/stat.h>
 #include <signal.h>
 
- /* Declaramos la variable fichero como puntero a FILE. */
+ 	/* Declaramos la variable fichero como puntero a FILE. */
 	FILE *fichero;
 
-	/* Declaramos la variable cadena de tipo array char. */
 	
-
-	/* Declaramos la variable reslutado como puntero. */
-	char *resultado;
 	/* Declaramos los metodos */
 	void manejador(int signum);
 	void Creardirectorios(char *cadena);
-
+/***********************************************Metodo principal***********************************************/
 int main(){
 	signal(SIGINT, manejador);
 	char cadena[256];
@@ -43,7 +54,7 @@ int main(){
     }
 
 }
-
+/**********************************************Metodo para crear una carpeta con cada Dni**********************************************/
 void Creardirectorios(char *cadena){
 	char linea[8];
    	char command[256];
@@ -60,8 +71,7 @@ void Creardirectorios(char *cadena){
 
 
 }
-
-
+/**********************************************Metodo para finalizar el proceso en caso de que se interrumpa**********************************************/
 void manejador(int signum){
 	printf("[PA] Proceso finalizaddo\n");
 	exit(0);

@@ -1,4 +1,4 @@
-******Log del sistema******
+******fichero del sistema******
 Creacion de directorios finalizada
 Copia de modelos de examen, finalizada.
 Creación de archivos con nota necesaria para alcanzar la nota de corte, finalizada.

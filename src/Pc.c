@@ -1,3 +1,18 @@
+/******************************************************
+ * Proyecto:                Práctica 1 de Sistemas Operativos II
+ * 
+ * Nombre de la Clase:      Pc.c
+ * 
+ * Autor:                   César Braojos Corroto
+ * 
+ * Dni:                     03949910M
+ * 
+ * Fecha final:             19/2/2019
+ * 
+ * Proposito:               Creación de los procesos PA, PB y PC, registra la finalización de cada tarea, la nota media de los estudiantes en la primera prueba y 
+ *                          crea el archivo log.txt
+ * 
+ ******************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -8,12 +23,11 @@
 
  /* Declaramos la variable fichero como puntero a FILE. */
 	FILE *fichero;
-	/* Declaramos la variable cadena de tipo array char. */
+	/* Declaramos los metodos */
 	void manejador(int signum);
-	int Copiar(char *cadena,float media)
+	int Escribir_fichero(char *cadena,float media);
 
-	/* Declaramos la variable reslutado como puntero. */
-
+/***********************************************Metodo principal***********************************************/
  void main(int argc, char *argv[]){
 	signal(SIGINT, manejador);
     char readBuffer[80];
@@ -30,23 +44,23 @@
     
 	} else {
 		while( fgets(cadena, 15 , fichero)){
-			media=Copiar(cadena,media);
+			media=Escribir_fichero(cadena,media);
         }
 		/* Cerramos "fichero1.txt". */
 		media=media/15; 
 		fclose(fichero);
-		sprintf(msg,"La nota del examen es %f",media);
+		sprintf(msg,"La nota del examen es %0.2f",media);
 		write(atoi(argv[0]), msg,strlen(msg)+1);
 		exit(EXIT_SUCCESS);
     }
 }
-
+/***********************************************Metodo para finalizar el proceso en caso de que se interrumpa***********************************************/
 void manejador(int signum){
 	printf("[PC] Proceso finalizaddo\n");
 	exit(0);
 }
-
-int Copiar(char *cadena,float media){
+/***********************************************Metodo para escribir el fichero de notas***********************************************/ 
+int Escribir_fichero(char *cadena,float media){
 	char command[256];
 	
 	char linea[8];
