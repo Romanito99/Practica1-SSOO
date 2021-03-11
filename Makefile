@@ -1,34 +1,43 @@
 DIROBJ := obj/
 DIREXE := exec/
-DIRHEA := include/
 DIRSRC := src/
-
-CFLAGS := -I$(DIRHEA) -c -Wall -ansi
 LDLIBS := -lpthread -lrt
 CC := gcc
+EXEC =  $(DIREXE)Manager $(DIREXE)Pa $(DIREXE)Pb $(DIREXE)Pc $(DIREXE)Pd 
+FILS = log.txt
 
-all : dirs manager pa pb
+all:  manager PA PB PC PD DAEMON run
 
-dirs:
-	mkdir -p $(DIROBJ) $(DIREXE)
 
-manager: $(DIROBJ)manager.o 
-	$(CC) -o $(DIREXE)$@ $^ $(LDLIBS)
 
-pa: $(DIROBJ)pa.o 
-	$(CC) -o $(DIREXE)$@ $^ $(LDLIBS)
+manager:
+	$(CC) $(LDLIBS) $(DIRSRC)Manager.c -o $(DIREXE)Manager
 
-pb: $(DIROBJ)pb.o 
-	$(CC) -o $(DIREXE)$@ $^ $(LDLIBS)
+PA:
+	$(CC) $(CFLAGS) $(DIRSRC)Pa.c -o $(DIREXE)Pa
 
-$(DIROBJ)%.o: $(DIRSRC)%.c
-	$(CC) $(CFLAGS) $^ -o $@
+PB:
+	$(CC) $(CFLAGS) $(DIRSRC)Pb.c -o $(DIREXE)Pb
+
+PC:
+	$(CC) $(CFLAGS) $(DIRSRC)Pc.c -o $(DIREXE)Pc
+
+PD:
+	$(CC) $(CFLAGS) $(DIRSRC)Pd.c -o $(DIREXE)Pd
+DAEMON: 
+	$(CC) $(CFLAGS) $(DIRSRC)daemon.c -o $(DIREXE)daemon
+
+
+run:
+	./$(DIREXE)Manager
 
 test:
-	./$(DIREXE)manager 3 2 5
+	ls -R $(FILS)
 
-solution:
-	./$(DIREXE)manager 2 3 4
-
-clean : 
-	rm -rf *~ core $(DIROBJ) $(DIREXE) $(DIRHEA)*~ $(DIRSRC)*~
+clean:
+	rm -rf estudiantes
+	rm -rf $(EXEC)
+	rm $(FILS)
+daemon:
+	rm -rf CopiaDeSeguridad
+	ps -e | grep daemon

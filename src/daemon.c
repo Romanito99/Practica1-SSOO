@@ -47,6 +47,6 @@ int sid;
 /***********************************************Loop infinito ***********************************************/
     while (1) {
         sleep(60);
-        system("cp -r /home/cesar/Escritorio/CURSSOCOVID/SSOO2/Practica1-SSOO/estudiantes /home/cesar/Escritorio/CURSSOCOVID/SSOO2/Practica1-SSOO/copia");  
+        system("cp -r /home/cesar/Escritorio/CURSSOCOVID/SSOO2/Practica1-SSOO/estudiantes /home/cesar/Escritorio/CURSSOCOVID/SSOO2/Practica1-SSOO/CopiaDeSeguridad");  
     }
 }

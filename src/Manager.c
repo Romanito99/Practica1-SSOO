@@ -56,7 +56,7 @@ int main(int argc, char *argv[]){
         fprintf(stderr,"[MANAGER]Error creando la carpeta estudiantes\n");
     }
     /*Abrimos el fichero fichero*/
-    fichero = fopen("fichero.txt", "w+");
+    fichero = fopen("log.txt", "w+");
 	if (fichero == NULL) {
 		fprintf(stderr,"[PA] Error: No se ha podido crear el fichero fichero1.txt");
 		exit(EXIT_FAILURE);
@@ -115,6 +115,7 @@ int main(int argc, char *argv[]){
         fclose(fichero);
     }
     exit(EXIT_SUCCESS); 
+}
 /**********************************************Metodo que controla la señal**********************************************/
 void manejador(int signum){
     /*Interrumpimos los procesos PA, PB y PC*/
