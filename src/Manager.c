@@ -22,31 +22,35 @@
 #include <errno.h>
 #include <signal.h>
 #include <wait.h>
+
 #define ESCRITURA 1
 #define LECTURA 0
+
     /* Declaramos la variable fichero como puntero a FILE. */
 	FILE *fichero;
     /* Declaramos la variable cadena de tipo array char. */
-    char *const parmList[]= {NULL,NULL, NULL};
-    char *const envParms[]= {NULL};
+    char *const g_parmList[] = {NULL,NULL, NULL};
+    char *const g_envParms[] = {NULL};
     /*Declaramos las variables de los procesos*/
-    pid_t pid_a;
-    pid_t pid_b;
-    pid_t pid_c;
-    int estado;
+    pid_t g_pid_a;
+    pid_t g_pid_b;
+    pid_t g_pid_c;
+    int g_estado;
     /*Declaramos los metodos*/
-    void manejador(int signum);
+    void Manjeador(int signum);
 
 /***********************************************Metodo principal***********************************************/
 
 int main(int argc, char *argv[]){
-    int tuberiaC[2];
+
+    int tuberia_c[2];
     char readBuffer[80];
-    char wr_tuberiaC[256];
+    char wr_tuberia_c[256];
     char command[256];
     char cadena[256];
+
     /*Recogemos la señal de interrupcion*/
-    signal(SIGINT, manejador);
+    signal(SIGINT, Manjeador);
     /*Lanzamos el demonio que se va a encargar de realizar la copia de seguridad*/
     if(system("./exec/daemon")!=0){
         fprintf(stderr,"[MANAGER]Error lanzando el daemon\n");
@@ -56,56 +60,56 @@ int main(int argc, char *argv[]){
         fprintf(stderr,"[MANAGER]Error creando la carpeta estudiantes\n");
     }
     /*Abrimos el fichero fichero*/
-    fichero = fopen("log.txt", "w+");
+    fichero = fopen("Log.txt", "w+");
 	if (fichero == NULL) {
 		fprintf(stderr,"[PA] Error: No se ha podido crear el fichero fichero1.txt");
 		exit(EXIT_FAILURE);
     }
-    pipe(tuberiaC);
+    pipe(tuberia_c);
     /*Seleccionamos el canal de escritura para el proceso C*/
-    sprintf(wr_tuberiaC, "%d", tuberiaC[ESCRITURA]);
+    sprintf(wr_tuberia_c, "%d", tuberia_c[ESCRITURA]);
     /*Creamos el proceso A*/
-    switch(pid_a = fork()){
+    switch(g_pid_a = fork()){
         case -1:
             fprintf(stderr,"[MANAGER] Error al crear el proceso hijo PA");
             exit(EXIT_FAILURE); 
         case 0:
-            if(execve("./exec/Pa", parmList,envParms)==-1){
+            if(execve("./exec/Pa", g_parmList,g_envParms)==-1){
                 fprintf(stderr,"[MANAGER] Error en execl PA"); 
                 exit(EXIT_FAILURE); 
             }
         default:
-            pid_a= wait(NULL);
+            g_pid_a= wait(NULL);
             /*Termina el proceso A , seguidamente comienzan el proceso B y C*/
             fputs("******fichero del sistema******\n", fichero);
             fputs("Creacion de directorios finalizada\n",fichero);
-            if ((pid_b = fork())== 0){
+            if ((g_pid_b = fork())== 0){
                 //Codigo del proceso PB
-                if(execve("./exec/Pb", parmList,envParms)==-1){
+                if(execve("./exec/Pb", g_parmList,g_envParms)==-1){
                     fprintf(stderr,"[MANAGER] Error en execl PB");  
                     exit(EXIT_FAILURE); 
                 }
-            }else if (pid_b==-1){
+            }else if (g_pid_b==-1){
                 fprintf(stderr,"[MANAGER] Error al crear el proceso hijo PB");
                 exit(EXIT_FAILURE); 
-            }else if((pid_c = fork())== 0){
+            }else if((g_pid_c = fork())== 0){
                 //Codigo del proceso PC
-                if(execl("./exec/Pc", wr_tuberiaC,NULL)==-1){
+                if(execl("./exec/Pc", wr_tuberia_c,NULL)==-1){
                     fprintf(stderr,"[MANAGER] Error en execl PC");
                     exit(EXIT_FAILURE); 
                 }
-            }else if(pid_c==-1) {
+            }else if(g_pid_c==-1) {
                fprintf(stderr,"[MANAGER] Error al crear el proceso hijo PC");
                 exit(EXIT_FAILURE); 
             }
             else{
                 /*Esperamos que terminen los procesos B y C , y finalizamos completando el Log*/
-                pid_b= wait(NULL);
-                pid_c= wait(NULL);
+                g_pid_b= wait(NULL);
+                g_pid_c= wait(NULL);
                 fputs("Copia de modelos de examen, finalizada.\n",fichero );
                 fputs("Creación de archivos con nota necesaria para alcanzar la nota de corte, finalizada.\n",fichero );
                 //Leemos de la tuberia el valor que envia el proceso c//
-                read(tuberiaC[LECTURA],readBuffer,sizeof(readBuffer));
+                read(tuberia_c[LECTURA],readBuffer,sizeof(readBuffer));
                 sprintf(cadena,"La nota media de la clase es: %s",readBuffer);
                 fputs(cadena,fichero);
                 fputs("\n******FIN DEL PROGRAMA******",fichero);
@@ -117,11 +121,11 @@ int main(int argc, char *argv[]){
     exit(EXIT_SUCCESS); 
 }
 /**********************************************Metodo que controla la señal**********************************************/
-void manejador(int signum){
+void Manjeador(int signum){
     /*Interrumpimos los procesos PA, PB y PC*/
-    kill(pid_c, SIGINT);
-    kill(pid_b, SIGINT);
-    kill(pid_a, SIGINT);
+    kill(g_pid_c, SIGINT);
+    kill(g_pid_b, SIGINT);
+    kill(g_pid_a, SIGINT);
     printf("[MANAGER] Procesos finalizados\n"); 
     /*Creamos el proceso PD*/
     pid_t pid_d; 
@@ -130,7 +134,7 @@ void manejador(int signum){
         fprintf(stderr, "[MANAGER] Error al crear el proceso PD\n");
         exit(EXIT_FAILURE); 
     }else if(pid_d == 0){
-         if(execve("./exec/Pd", parmList,envParms)==-1){
+         if(execve("./exec/Pd", g_parmList,g_envParms)==-1){
                 fprintf(stderr,"[MANAGER]Error en execl PD");
                 exit(EXIT_FAILURE); 
             }

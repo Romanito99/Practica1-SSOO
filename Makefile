@@ -4,7 +4,8 @@ DIRSRC := src/
 LDLIBS := -lpthread -lrt
 CC := gcc
 EXEC =  $(DIREXE)Manager $(DIREXE)Pa $(DIREXE)Pb $(DIREXE)Pc $(DIREXE)Pd 
-FILS = log.txt
+FILS = Log.txt
+COPY = CopiaDeSeguridad
 
 all:  manager PA PB PC PD DAEMON run
 
@@ -39,5 +40,5 @@ clean:
 	rm -rf $(EXEC)
 	rm $(FILS)
 daemon:
-	rm -rf CopiaDeSeguridad
+	rm -rf $(COPY)
 	ps -e | grep daemon

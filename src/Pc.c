@@ -5,7 +5,7 @@
  * 
  * Autor:                   César Braojos Corroto
  * 
- * Dni:                     03949910M
+ * p_dni:                     03949910M
  * 
  * Fecha final:             19/2/2019
  * 
@@ -36,7 +36,7 @@
 	float media=0; 
 	/* Abrimos "fichero1.txt" en modo texto y
 	 * guardamos su direccion en el puntero. */
-	fichero = fopen("estudiantes_p1.text", "rt");
+	fichero = fopen("utils/estudiantes_p1.text", "rt");
 
 	if (fichero == NULL) {
 		printf("[PC] Error: No se ha podido crear el fichero fichero1.txt");
@@ -65,20 +65,19 @@ int Escribir_fichero(char *cadena,float media){
 	
 	char linea[8];
 	const char s[2] = " ";
-   	char *Dni;
-	char *Examen;	
-	char *Nota;
+   	char *p_dni;
+	char *p_examen;	
 	int nota;
-		Dni = strtok(cadena, s);
-		if( Dni != NULL ) {
-		Examen= strtok(NULL, s);
+		p_dni = strtok(cadena, s);
+		if( p_dni != NULL ) {
+		p_examen= strtok(NULL, s);
 		}
-		if( Examen != NULL ) {
+		if( p_examen != NULL ) {
 		nota= atoi(strtok(NULL, s));
 		}
 		media+=nota;	
 		nota=10-nota;
-		sprintf(command,"echo La nota que debes obtener en este nuevo examen para superar la prueba es %d >   estudiantes/%s/nota.txt",nota ,Dni);
+		sprintf(command,"echo La nota que debes obtener en este nuevo examen para superar la prueba es %d >   estudiantes/%s/nota.txt",nota ,p_dni);
 
 		if (system(command)!=0){
 			printf("[PC] Error escribiendo el archivo\n");
