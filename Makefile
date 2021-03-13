@@ -3,13 +3,13 @@ DIREXE := exec/
 DIRSRC := src/
 LDLIBS := -lpthread -lrt
 CC := gcc
-EXEC =  $(DIREXE)Manager $(DIREXE)Pa $(DIREXE)Pb $(DIREXE)Pc $(DIREXE)Pd 
 FILS = Log.txt
 COPY = CopiaDeSeguridad
 
-all:  manager PA PB PC PD DAEMON run
+all:  dir manager PA PB PC PD DAEMON run
 
-
+dir:
+	mkdir estudiantes $(COPY) exec
 
 manager:
 	$(CC) $(LDLIBS) $(DIRSRC)Manager.c -o $(DIREXE)Manager
@@ -37,7 +37,7 @@ test:
 
 clean:
 	rm -rf estudiantes
-	rm -rf $(EXEC)
+	rm -rf $(DIREXE)
 	rm $(FILS)
 daemon:
 	rm -rf $(COPY)

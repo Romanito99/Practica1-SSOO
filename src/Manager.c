@@ -55,10 +55,7 @@ int main(int argc, char *argv[]){
     if(system("./exec/daemon")!=0){
         fprintf(stderr,"[MANAGER]Error lanzando el daemon\n");
     }
-    /*Creamos la carpeta estudiante donde vamos a añadir la carpeta de cada estudiante*/
-    if(system("mkdir estudiantes" )!=0){
-        fprintf(stderr,"[MANAGER]Error creando la carpeta estudiantes\n");
-    }
+   
     /*Abrimos el fichero fichero*/
     fichero = fopen("Log.txt", "w+");
 	if (fichero == NULL) {

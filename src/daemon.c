@@ -24,7 +24,6 @@
 int main(){
 int pid;
 int sid;
-        
     /* Fork para crear un proceso hijo que ejecutara el Daemon*/
     pid = fork();
     if (pid < 0) {
@@ -33,8 +32,7 @@ int sid;
     if (pid > 0) {
         exit(EXIT_SUCCESS);
     }
-
-    umask(0);       
+      
     
     /* Creamos un SID para el proceso hijo*/
     sid = setsid();
@@ -46,7 +44,7 @@ int sid;
       
 /***********************************************Loop infinito ***********************************************/
     while (1) {
-        sleep(60);
+        sleep(30);
         system("cp -r estudiantes CopiaDeSeguridad");  
     }
 }
