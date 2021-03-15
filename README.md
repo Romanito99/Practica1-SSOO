@@ -6,37 +6,28 @@ Fecha: 15-Marzo-2021
 
 **Práctica 1 –Llamadas al sistema y señales**
 
-**COMPILACION DEL PROGRAMA: make** 
+**COMPILACION DEL PROGRAMA:**
 
-Ejecutara los siguientes comandos.
+    $~make
 
-    mkdir estudiantes CopiaDeSeguridad exec
-    gcc -lpthread -lrt src/Manager.c -o exec/Manager
-    gcc  src/Pa.c -o exec/Pa
-    gcc  src/Pb.c -o exec/Pb
-    gcc  src/Pc.c -o exec/Pc
-    gcc  src/Pd.c -o exec/Pd
-    gcc  src/daemon.c -o exec/daemon
-    ./exec/Manager
+Este comando se encargar de ejcutar los comandos para preparar la ejecucion y lo ejecutara.
     
-**LIMPIEZA CARPETA: make clean**
+**LIMPIEZA CARPETA:**
 
-Ejecutara los siguientes comandos.
+    $~make clean
+    
+Este comando se encargar de eliminar las carpetas y archivos creados en la ejecución.
 
-    rm -rf estudiantes
-    rm -rf exec/
-    rm Log.txt
 
 Finalmente por las caracteristicas del programa he añadido una opcion para ver los deamon que se estan ejecutando en tu ordenador , y asi poder parar el daemon de mi practica 
 
-**DAEMON: make daemon**
-  
-Ejecutara los siguientes comandos.
+**DAEMON:**
 
-    rm -rf CopiaDeSeguridad
-    ps -e | grep daemon
+    $~make daemon
   
-Despues de esto con el comando kill podremos terminar la ejecucion de nuestro daemon. 
-Por ejemplo: 
+ Este comando se  encarga de eliminar la copia de segurida que obtenemos y de mostrar os daemon en ejcucion.
+ 
+ Despues de esto con el comando kill podremos terminar la ejecucion de nuestro daemon. 
+ Por ejemplo: 
   
-    kill -9 3623
+    $~kill -9 3623
