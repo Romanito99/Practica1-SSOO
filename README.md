@@ -10,13 +10,13 @@ Fecha: 15-Marzo-2021
 
     $~make
 
-Esto se encargar de ejcutar los comandos para preparar la ejecucion y lo ejecutara.
+Este comando se encargar de ejcutar los comandos para preparar la ejecucion y lo ejecutara.
     
 **LIMPIEZA CARPETA:**
 
     $~make clean
     
-Esto se encargar de eliminar las carpetas y archivos creados en la ejecución.
+Este comando se encargar de eliminar las carpetas y archivos creados en la ejecución.
 
 
 Finalmente por las caracteristicas del programa he añadido una opcion para ver los deamon que se estan ejecutando en tu ordenador , y asi poder parar el daemon de mi practica 
@@ -25,7 +25,7 @@ Finalmente por las caracteristicas del programa he añadido una opcion para ver 
 
     $~make daemon
   
- Esto se encarga de eliminar la copia de segurida que obtenemos y de mostrar os daemon en ejcucion.
+ Este comando se  encarga de eliminar la copia de segurida que obtenemos y de mostrar os daemon en ejcucion.
  
  Despues de esto con el comando kill podremos terminar la ejecucion de nuestro daemon. 
  Por ejemplo: 
