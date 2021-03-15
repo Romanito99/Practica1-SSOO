@@ -31,7 +31,7 @@ Finalmente por las caracteristicas del programa he añadido una opcion para ver 
 
 **DAEMON: make daemon**
   
-Ejecutara el siguiente comando.
+Ejecutara los siguientes comandos.
 
     rm -rf CopiaDeSeguridad
     ps -e | grep daemon
