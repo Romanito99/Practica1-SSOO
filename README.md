@@ -12,7 +12,7 @@ Fecha: 15-Marzo-2021
 
 Esto se encargar de ejcutar los comandos para preparar la ejecucion y lo ejecutara.
     
-**LIMPIEZA CARPETA: **
+**LIMPIEZA CARPETA:**
 
     $~make clean
     
