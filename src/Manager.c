@@ -5,7 +5,6 @@
 * 
 * Autor:                   César Braojos Corroto
 * 
-* Dni:                     03949910M
 * 
 * 
 * 
