@@ -5,7 +5,7 @@
  * 
  * Autor:                   César Braojos Corroto
  * 
- * Dni:                     03949910M
+
  * 
  * 
  * Proposito:               Creación de los procesos PA, PB y PC, registra la finalización de cada tarea, la nota media de los estudiantes en la primera prueba y 
